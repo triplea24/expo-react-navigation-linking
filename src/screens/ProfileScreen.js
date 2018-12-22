@@ -16,10 +16,10 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>Home Screen</Text>
-        {this.renderButton("app/detail")}
+        <Text>Profile Screen</Text>
         {this.renderButton("profile/detail")}
-        {this.renderButton("profile/main")}
+        {this.renderButton("app/detail")}
+        {this.renderButton("app/home")}
       </View>
     );
   }

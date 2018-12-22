@@ -1,10 +1,14 @@
 import React from "react";
-import { createStackNavigator, createAppContainer } from "react-navigation";
+import {
+  createStackNavigator,
+  createAppContainer,
+  createBottomTabNavigator
+} from "react-navigation";
 import { Linking } from "expo";
 
-import { HomeScreen, DetailsScreen } from "./src/screens";
+import { HomeScreen, DetailsScreen, ProfileScreen } from "./src/screens";
 
-const AppNavigator = createStackNavigator(
+const HomeStack = createStackNavigator(
   {
     Home: {
       screen: HomeScreen,
@@ -20,6 +24,30 @@ const AppNavigator = createStackNavigator(
   }
 );
 
+const ProfileStack = createStackNavigator(
+  {
+    Profile: {
+      screen: ProfileScreen,
+      path: "main/"
+    },
+    Details: {
+      screen: DetailsScreen,
+      path: "detail/"
+    }
+  },
+  { initialRouteName: "Profile" }
+);
+
+const AppNavigator = createBottomTabNavigator(
+  {
+    App: HomeStack,
+    Profile: ProfileStack
+  },
+  {
+    initialRouteName: "Profile"
+  }
+);
+
 const AppContainer = createAppContainer(AppNavigator);
 
 const uriPrefix = Linking.makeUrl("/");
@@ -27,7 +55,8 @@ const uriPrefix = Linking.makeUrl("/");
 export default class App extends React.Component {
   componentDidMount() {
     Linking.getInitialURL().then(url => {
-      const { path, queryParams } = Linking.parse(url);
+      // const { path, queryParams } = Linking.parse(url);
+      // Linking.openURL(url);
     });
     Linking.addEventListener("url", this._handleUrl);
   }
